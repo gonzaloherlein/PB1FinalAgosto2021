@@ -1,5 +1,7 @@
 package ar.edu.unlam.pb1.finalAgosto;
 
+import java.util.Random;
+
 public class Empresa {
 
 	/*
@@ -68,7 +70,9 @@ public class Empresa {
 	
 	public Contacto buscarCandidato() {
 		
-		Contacto candidato = null;
+		Contacto[] candidato = new Contacto[100];
+		
+		
 		/*
 		 * Para determinar qu� contacto el sistema debe mostrar, se debe realizar la siguiente b�squeda:
 		 * 1.	El contacto NO debe ser cliente a�n.
@@ -78,14 +82,26 @@ public class Empresa {
 		 */
 		for (int i = 0; i < contactos.length; i++) {
 			if(contactos[i].getEsCliente() == false && contactos[i].getLlamarNuevamente() == true && contactos[i].getCodigoPostal() == zonaDeCobertura[i]) {
-				contactos[i] = candidato;
-				return candidato;
+				candidato[i] = contactos[i];
 			}
+		}
+		if(candidato.length > 0) {
+			Random random = new Random();
+			int index = random.nextInt(candidato.length);
+			return candidato[index];
 		}
 		return null;
 	}
 	
 	
+
+	public Contacto[] getContactos() {
+		return contactos;
+	}
+
+	public void setContactos(Contacto[] contactos) {
+		this.contactos = contactos;
+	}
 
 	public int getCodigoPostal() {
 		return codigoPostal;

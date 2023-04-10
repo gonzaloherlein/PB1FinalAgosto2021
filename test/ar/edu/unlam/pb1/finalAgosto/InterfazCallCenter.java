@@ -129,7 +129,7 @@ public class InterfazCallCenter {
 		/*
 		 * Se visualiza la informaci�n del contacto, incluso el listado de las llamadas que se le hicieron
 		 */
-		empresa.buscarCandidato().toString();
+		empresa.getContactos().toString();
 	}
 	
 	

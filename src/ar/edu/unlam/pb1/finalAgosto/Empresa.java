@@ -19,7 +19,7 @@ public class Empresa {
 	
 	public Empresa(String nombreEmpresa, int codigoPostal, int[] zonaDeCobertura) {
 		this.nombreEmpresa = nombreEmpresa;
-		this.setCodigoPostal(codigoPostal);
+		this.codigoPostal = codigoPostal;
 		this.zonaDeCobertura = zonaDeCobertura;
 		this.contactos = new Contacto[100];
 	}
@@ -70,9 +70,8 @@ public class Empresa {
 	
 	public Contacto buscarCandidato() {
 		
-		Contacto[] candidato = new Contacto[100];
-		
-		
+		Contacto[] candidato = new Contacto[contactos.length];
+		int numCandidatos = 0;
 		/*
 		 * Para determinar qu� contacto el sistema debe mostrar, se debe realizar la siguiente b�squeda:
 		 * 1.	El contacto NO debe ser cliente a�n.
@@ -81,18 +80,21 @@ public class Empresa {
 		 * 4.	Del conjunto de contactos resultante se debe seleccionar aleatoriamente el pr�ximo llamado.
 		 */
 		for (int i = 0; i < contactos.length; i++) {
-			if(contactos[i].getEsCliente() == false && contactos[i].getLlamarNuevamente() == true && contactos[i].getCodigoPostal() == zonaDeCobertura[i]) {
-				candidato[i] = contactos[i];
+			if(contactos[i] != null){
+				if(contactos[i].getEsCliente() == false && contactos[i].getLlamarNuevamente() == null && contactos[i].getCodigoPostal() == zonaDeCobertura[i]) {
+					 candidato[numCandidatos] = contactos[i];
+				     numCandidatos++;
+				}
 			}
 		}
-		if(candidato.length > 0) {
+		if(numCandidatos > 0) {
 			Random random = new Random();
 			int index = random.nextInt(candidato.length);
-			return candidato[index];
+			Contacto proximoContacto = candidato[index];
+			return proximoContacto;
 		}
 		return null;
 	}
-	
 	
 
 	public Contacto[] getContactos() {

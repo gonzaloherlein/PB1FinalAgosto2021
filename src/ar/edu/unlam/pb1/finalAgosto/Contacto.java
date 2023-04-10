@@ -32,8 +32,7 @@ public class Contacto {
 		
 	}
 	
-	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia,
-			Boolean esCliente, Boolean llamarNuevamente, Llamada[] listaDellamadas) {
+	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia) {
 		this.nombreYApellido = nombreYApellido;
 		this.celular = celular;
 		this.email = email;
@@ -46,15 +45,15 @@ public class Contacto {
 		this.listaDellamadas = listaDellamadas;
 	}
 	
-	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia) {
-		this.nombreYApellido = nombreYApellido;
-		this.celular = celular;
-		this.email = email;
-		this.direccion = direccion;
-		this.codigoPostal = codigoPostal;
-		this.localidad = localidad;
-		this.provincia = provincia;
-	}
+//	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia) {
+//		this.nombreYApellido = nombreYApellido;
+//		this.celular = celular;
+//		this.email = email;
+//		this.direccion = direccion;
+//		this.codigoPostal = codigoPostal;
+//		this.localidad = localidad;
+//		this.provincia = provincia;
+//	}
 	
 	public void esEmailValido(String email) {
 		/*
@@ -109,8 +108,7 @@ public class Contacto {
 	public String toString() {
 		return "Contacto [nombreYApellido=" + nombreYApellido + ", celular=" + celular + ", email=" + email
 				+ ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", localidad=" + localidad
-				+ ", provincia=" + provincia + ", esCliente=" + esCliente + ", llamarNuevamente=" + llamarNuevamente
-				+ ", listaDellamadas=" + Arrays.toString(listaDellamadas) + "]";
+				+ ", provincia=" + provincia;
 	}
 
 	

@@ -76,6 +76,8 @@ public class InterfazCallCenter {
 		System.out.println("Ingrese la direccion: ");
 		String direccion = teclado.next();
 		
+		teclado.nextLine();
+		
 		System.out.println("Ingrese el codigo postal: ");
 		int codigoPostal = teclado.nextInt();
 		
@@ -104,9 +106,9 @@ public class InterfazCallCenter {
 		 * un nuevo intento en el futuro).
 		 * c.	Observaciones: Texto libre donde el operador deja registro de lo conversado.
 		 */
-		Llamada llamada = null;
+		Llamada llamada = new Llamada(false,"");
 		Contacto candidato = empresa.buscarCandidato();
-		candidato.toString();
+		System.out.println(candidato.toString());
 		if(llamada.FueExitosa()) {
 			candidato.setEsCliente(true);
 			candidato.setLlamarNuevamente(false);

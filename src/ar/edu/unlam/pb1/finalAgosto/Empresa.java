@@ -8,7 +8,7 @@ public class Empresa {
 	
 	private String nombreEmpresa;
 	private int codigoPostal;
-	private int[] zonaDeCobertura;
+	private int[] zonaDeCobertura = new int[100];
 	private Contacto[] contactos = new Contacto[100];
 	
 	public Empresa() {
@@ -17,7 +17,7 @@ public class Empresa {
 	
 	public Empresa(String nombreEmpresa, int codigoPostal, int[] zonaDeCobertura) {
 		this.nombreEmpresa = nombreEmpresa;
-		this.codigoPostal = codigoPostal;
+		this.setCodigoPostal(codigoPostal);
 		this.zonaDeCobertura = zonaDeCobertura;
 		this.contactos = new Contacto[100];
 	}
@@ -34,6 +34,7 @@ public class Empresa {
 		for (int i = 0; i < contactos.length; i++) {
 			if (contactos[i] == null) {
 					contactos[i] = contacto;
+					contacto.setEsCliente(true);
 					return true;
 			}
 		}
@@ -45,7 +46,7 @@ public class Empresa {
 		 * Incorpora una nueva zona de cobertura (Las zonas de cobertura se identifican por el codigo postal)
 		 */
 		for (int i = 0; i < this.zonaDeCobertura.length; i++) {
-			if(zonaDeCobertura[i] == 0 && elCodigoPostalEstaDentroDeLaZonaDeCobertura(codigoPostal) == false) {
+			if(zonaDeCobertura[i] == 0 && !(elCodigoPostalEstaDentroDeLaZonaDeCobertura(codigoPostal))) {
 				zonaDeCobertura[i] = codigoPostal;
 				return true;
 			}
@@ -82,5 +83,15 @@ public class Empresa {
 			}
 		}
 		return null;
+	}
+	
+	
+
+	public int getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	public void setCodigoPostal(int codigoPostal) {
+		this.codigoPostal = codigoPostal;
 	}
 }

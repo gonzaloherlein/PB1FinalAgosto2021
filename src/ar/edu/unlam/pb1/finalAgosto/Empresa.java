@@ -10,8 +10,11 @@ public class Empresa {
 	
 	private String nombreEmpresa;
 	private int codigoPostal;
-	private int[] zonaDeCobertura = new int[100];
-	private Contacto[] contactos = new Contacto[100];
+	private int[] zonaDeCobertura;
+	private Contacto[] contactos;
+	private final int CANTIDAD_MAXIMA_DE_ZONAS = 100;
+	private final int CANTIDAD_MAXIMA_DE_CONTACTOS = 100;
+	
 	
 	public Empresa() {
 		
@@ -20,8 +23,8 @@ public class Empresa {
 	public Empresa(String nombreEmpresa, int codigoPostal, int[] zonaDeCobertura) {
 		this.nombreEmpresa = nombreEmpresa;
 		this.codigoPostal = codigoPostal;
-		this.zonaDeCobertura = zonaDeCobertura;
-		this.contactos = new Contacto[100];
+		this.zonaDeCobertura = new int [CANTIDAD_MAXIMA_DE_ZONAS];
+		this.contactos = new Contacto[CANTIDAD_MAXIMA_DE_CONTACTOS];
 	}
 	
 	public String getNombreEmpresa() {
@@ -36,7 +39,6 @@ public class Empresa {
 		for (int i = 0; i < contactos.length; i++) {
 			if (contactos[i] == null) {
 					contactos[i] = contacto;
-					contacto.setEsCliente(true);
 					return true;
 			}
 		}
@@ -69,9 +71,6 @@ public class Empresa {
 	}
 	
 	public Contacto buscarCandidato() {
-		
-		Contacto[] candidato = new Contacto[contactos.length];
-		int numCandidatos = 0;
 		/*
 		 * Para determinar qu� contacto el sistema debe mostrar, se debe realizar la siguiente b�squeda:
 		 * 1.	El contacto NO debe ser cliente a�n.
@@ -79,19 +78,27 @@ public class Empresa {
 		 * 3.	El c�digo postal del contacto debe existir en las zonas de cobertura existente.
 		 * 4.	Del conjunto de contactos resultante se debe seleccionar aleatoriamente el pr�ximo llamado.
 		 */
+		Contacto candidatos[] = new Contacto[contactos.length];
+		int cantidadDeCandidatos = 0;
+		
+		
 		for (int i = 0; i < contactos.length; i++) {
-			if(contactos[i] != null){
-				if(contactos[i].getEsCliente() == false && contactos[i].getLlamarNuevamente() == null && contactos[i].getCodigoPostal() == zonaDeCobertura[i]) {
-					 candidato[numCandidatos] = contactos[i];
-				     numCandidatos++;
-				}
+			if(contactos[i]!= null && contactos[i].getLlamarNuevamente() && !contactos[i].getEsCliente()) {
+				candidatos[cantidadDeCandidatos++] = contactos[i];
 			}
 		}
-		if(numCandidatos > 0) {
-			Random random = new Random();
-			int index = random.nextInt(candidato.length);
-			Contacto proximoContacto = candidato[index];
-			return proximoContacto;
+		
+		int candidatoAleatorio = (int)(Math.random() * cantidadDeCandidatos);
+		return candidatos[candidatoAleatorio];
+	}
+	
+	public Contacto buscarPorNombre(String nombre) {
+		for (int i = 0; i < contactos.length; i++) {
+			if(contactos[i] != null) {
+				if(contactos[i].getNombreYApellido().equalsIgnoreCase(nombre)) {
+					return contactos[i];
+				}
+			}
 		}
 		return null;
 	}

@@ -26,7 +26,9 @@ public class Contacto {
 	private Provincia provincia;
 	private Boolean esCliente;
 	private Boolean llamarNuevamente;
+	
 	private Llamada[] listaDellamadas;
+	private final int CANTIDAD_MAXIMA_DE_LLAMADAS = 10;
 	
 	public Contacto() {
 		
@@ -42,26 +44,18 @@ public class Contacto {
 		this.provincia = provincia;
 		this.esCliente = false;
 		this.llamarNuevamente = true;
-		this.listaDellamadas = listaDellamadas;
+		this.listaDellamadas = new Llamada[CANTIDAD_MAXIMA_DE_LLAMADAS];
 	}
 	
-//	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia) {
-//		this.nombreYApellido = nombreYApellido;
-//		this.celular = celular;
-//		this.email = email;
-//		this.direccion = direccion;
-//		this.codigoPostal = codigoPostal;
-//		this.localidad = localidad;
-//		this.provincia = provincia;
-//	}
 	
-	public void esEmailValido(String email) {
+	public static boolean esEmailValido(String email) {
 		/*
 		 * Eval�a si un String determinado puede ser almacenado como E-MAIL.
 		 */
-		
 		if(email.contains("@") && email.contains(".")) {
-			this.email = email;
+			return true;
+		}else {
+			return false;
 		}
 	}
 	
@@ -75,6 +69,7 @@ public class Contacto {
 				return true;
 			}
 		}	
+		this.llamarNuevamente = false;
 		return false;
 	}
 	
@@ -106,9 +101,24 @@ public class Contacto {
 
 	@Override
 	public String toString() {
-		return "Contacto [nombreYApellido=" + nombreYApellido + ", celular=" + celular + ", email=" + email
-				+ ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", localidad=" + localidad
-				+ ", provincia=" + provincia;
+		String resultado = "";
+		
+		resultado = this.nombreYApellido + "\n" + this.celular;
+		
+		for (int i = 0; i < listaDellamadas.length; i++) {
+			if(listaDellamadas[i] != null) {
+				resultado += "\n" + "[" + i + "]" + listaDellamadas[i].getObservaciones();
+			}
+		}
+		return resultado;
+	}
+
+	public String getNombreYApellido() {
+		return nombreYApellido;
+	}
+
+	public void setNombreYApellido(String nombreYApellido) {
+		this.nombreYApellido = nombreYApellido;
 	}
 
 	

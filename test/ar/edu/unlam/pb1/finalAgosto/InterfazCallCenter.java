@@ -46,10 +46,13 @@ public class InterfazCallCenter {
 		/*
 		 * Se registra un nuevo codigo postal dentro de la zona de cobertura de la empresa
 		 */
-		System.out.println("Ingrese un nuevo codigo postal: ");
-		int codigoPostal = teclado.nextInt();
 		
-		if(empresa.agregarNuevaZonaDeCobertura(codigoPostal)) {
+		int codigoDeCobertura = 0;
+		
+		System.out.println("Ingrese un nuevo codigo postal: ");
+		codigoDeCobertura = teclado.nextInt();
+		
+		if(empresa.agregarNuevaZonaDeCobertura(codigoDeCobertura)) {
 			System.out.println("Se ha incorporado Zona de Cobertura correctamente");
 		}else {
 			System.out.println("Vuelva a intentarlo");
@@ -62,33 +65,35 @@ public class InterfazCallCenter {
 		/*
 		 * Registra un nuevo contacto en la empresa
 		 */
+		Contacto contacto;
+		String email;
 		System.out.println("Ingrese el nombre y apellido: ");
-		String nombreYApellido = teclado.next();
+		String nombreYApellido = teclado.nextLine();
 		
-		teclado.nextLine();
 		
 		System.out.println("Ingrese el celular: ");
 		int celular = teclado.nextInt();
 		
-		System.out.println("Ingrese el email: ");
-		String email = teclado.next();
+		do {
+			System.out.println("Ingrese el email: ");
+			email = teclado.next();
+		} while (!Contacto.esEmailValido(email));
 		
 		System.out.println("Ingrese la direccion: ");
-		String direccion = teclado.next();
+		String direccion = teclado.nextLine();
 		
-		teclado.nextLine();
 		
 		System.out.println("Ingrese el codigo postal: ");
 		int codigoPostal = teclado.nextInt();
 		
 		System.out.println("Ingrese la localidad: ");
-		String localidad = teclado.next();
+		String localidad = teclado.nextLine();
 		
 		System.out.println("Ingrese la provincia: ");
 		int opcionSeleccionada = teclado.nextInt();
 		Provincia provincia = Provincia.values()[opcionSeleccionada - 1];
 		
-		Contacto contacto = new Contacto(nombreYApellido, celular,email,direccion,codigoPostal,localidad,provincia);
+		contacto = new Contacto(nombreYApellido, celular,email,direccion,codigoPostal,localidad,provincia);
 		if(empresa.agregarNuevoContacto(contacto)) {
 			System.out.println("Se ha registrado el contacto correctamente");
 		}else {
@@ -106,24 +111,32 @@ public class InterfazCallCenter {
 		 * un nuevo intento en el futuro).
 		 * c.	Observaciones: Texto libre donde el operador deja registro de lo conversado.
 		 */
-		Llamada llamada = new Llamada(false,"");
+		Llamada nuevaLlamada;
 		Contacto candidato = empresa.buscarCandidato();
-		System.out.println(candidato.toString());
-		if(llamada.FueExitosa()) {
+		char OpcionDeLlamadaExitosa, OpcionDeDeseaSerLlamadoNuevamente;
+		boolean llamadaExitosa = false, deseaSerLlamadoNuevamente = false;
+		String observaciones;
+		System.out.println(candidato);
+		System.out.println("La llamada fue exitosa? (S/N): ");
+		OpcionDeLlamadaExitosa = teclado.next().charAt(0);
+		if(OpcionDeLlamadaExitosa == 'S') {
 			candidato.setEsCliente(true);
+		}
+
+		System.out.println("El contacto desea ser llamado nuevamente? (S/N):");
+		OpcionDeDeseaSerLlamadoNuevamente = teclado.next().charAt(0);
+		if(OpcionDeDeseaSerLlamadoNuevamente == 'N') {
 			candidato.setLlamarNuevamente(false);
-		}else {
-			candidato.setLlamarNuevamente(true);
 		}
 		
-		System.out.println("Deje a continuacion sus observaciones: ");
-		String observaciones = teclado.next();
-		llamada.setObservaciones(observaciones);
 		
-		llamada = new Llamada(llamada.FueExitosa(), llamada.getObservaciones());
-		if(candidato.registrarNuevaLlamada(llamada)) {
-			System.out.println("Se ha realizado la llamada correctamente");
-		}
+		System.out.println("Ingrese las observaciones: ");
+		teclado.nextLine();
+		observaciones = teclado.nextLine();
+		
+		nuevaLlamada = new Llamada(llamadaExitosa, observaciones);
+		
+		candidato.registrarNuevaLlamada(nuevaLlamada);
 		
 	}
 	
@@ -131,7 +144,16 @@ public class InterfazCallCenter {
 		/*
 		 * Se visualiza la informaci�n del contacto, incluso el listado de las llamadas que se le hicieron
 		 */
-		empresa.getContactos().toString();
+		String nombre = " ";
+		Contacto encontrado = null;
+		System.out.println("Ingrese el nombre del contacto que desee buscar: ");
+		nombre = teclado.nextLine();
+		encontrado = empresa.buscarPorNombre(nombre);
+		if(encontrado != null) {
+			System.out.println(encontrado.toString());
+		}else {
+			System.out.println("No se ha encontrado el contacto");
+		}
 	}
 	
 	

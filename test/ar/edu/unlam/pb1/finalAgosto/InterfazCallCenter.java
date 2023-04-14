@@ -129,7 +129,7 @@ public class InterfazCallCenter {
 			candidato.setLlamarNuevamente(false);
 		}
 		
-		
+	
 		System.out.println("Ingrese las observaciones: ");
 		teclado.nextLine();
 		observaciones = teclado.nextLine();

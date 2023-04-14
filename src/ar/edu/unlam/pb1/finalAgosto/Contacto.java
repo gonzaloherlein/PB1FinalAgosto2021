@@ -27,11 +27,16 @@ public class Contacto {
 	private Boolean esCliente;
 	private Boolean llamarNuevamente;
 	
-	private Llamada[] listaDellamadas;
 	private final int CANTIDAD_MAXIMA_DE_LLAMADAS = 10;
+	private Llamada[] listaDellamadas = new Llamada[CANTIDAD_MAXIMA_DE_LLAMADAS];
+	
 	
 	public Contacto() {
 		
+	}
+	
+	public Contacto(String nombreYApellido) {
+		this.nombreYApellido = nombreYApellido;
 	}
 	
 	public Contacto(String nombreYApellido, int celular, String email, String direccion, int codigoPostal, String localidad, Provincia provincia) {

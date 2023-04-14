@@ -1,7 +1,5 @@
 package ar.edu.unlam.pb1.finalAgosto;
 
-import java.util.Random;
-
 public class Empresa {
 
 	/*
@@ -10,10 +8,11 @@ public class Empresa {
 	
 	private String nombreEmpresa;
 	private int codigoPostal;
-	private int[] zonaDeCobertura;
-	private Contacto[] contactos;
 	private final int CANTIDAD_MAXIMA_DE_ZONAS = 100;
 	private final int CANTIDAD_MAXIMA_DE_CONTACTOS = 100;
+	private int[] zonaDeCobertura = new int[CANTIDAD_MAXIMA_DE_ZONAS];
+	private Contacto[] contactos = new Contacto[CANTIDAD_MAXIMA_DE_CONTACTOS];
+	
 	
 	
 	public Empresa() {
@@ -21,10 +20,17 @@ public class Empresa {
 	}
 	
 	public Empresa(String nombreEmpresa, int codigoPostal, int[] zonaDeCobertura) {
+		this.zonaDeCobertura = new int [CANTIDAD_MAXIMA_DE_ZONAS];
+		inicializarZonaDeCoberturas();
 		this.nombreEmpresa = nombreEmpresa;
 		this.codigoPostal = codigoPostal;
-		this.zonaDeCobertura = new int [CANTIDAD_MAXIMA_DE_ZONAS];
 		this.contactos = new Contacto[CANTIDAD_MAXIMA_DE_CONTACTOS];
+	}
+	
+	private void inicializarZonaDeCoberturas() {
+		for (int i = 0; i < 100; i++) {
+			zonaDeCobertura[i] = 0;
+		}
 	}
 	
 	public String getNombreEmpresa() {
@@ -42,15 +48,17 @@ public class Empresa {
 					return true;
 			}
 		}
-		return false;
+		return false;  
 	}
+	
+	
 	
 	public boolean agregarNuevaZonaDeCobertura(int codigoPostal) {
 		/*
 		 * Incorpora una nueva zona de cobertura (Las zonas de cobertura se identifican por el codigo postal)
 		 */
-		for (int i = 0; i < this.zonaDeCobertura.length; i++) {
-			if(zonaDeCobertura[i] == 0 && !(elCodigoPostalEstaDentroDeLaZonaDeCobertura(codigoPostal))) {
+		for (int i = 0; i < 100; i++) {
+			if(zonaDeCobertura[i] == 0) {
 				zonaDeCobertura[i] = codigoPostal;
 				return true;
 			}
@@ -58,17 +66,17 @@ public class Empresa {
 		return false;
 	}	
 	
-	private boolean elCodigoPostalEstaDentroDeLaZonaDeCobertura(int codigoPostal) {
-		/*
-		 * Determina si un c�digo postal est� dentro de la zona de cobertura
-		 */
-		for (int i = 0; i < zonaDeCobertura.length; i++) {
-			if(zonaDeCobertura[i] == codigoPostal) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean elCodigoPostalEstaDentroDeLaZonaDeCobertura(int codigoPostal) {
+//		/*
+//		 * Determina si un c�digo postal est� dentro de la zona de cobertura
+//		 */
+//		for (int i = 0; i < zonaDeCobertura.length; i++) {
+//			if(zonaDeCobertura[i] == codigoPostal) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	public Contacto buscarCandidato() {
 		/*
